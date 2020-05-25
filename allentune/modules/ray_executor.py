@@ -117,6 +117,8 @@ class RayExecutor(object):
                 f"Error during run of experiment: {e}"
             )
 
+        ray.shutdown()
+
     def run(self, args: argparse.Namespace) -> None:
         setattr(args, "cwd", os.getcwd())
 
