@@ -1,0 +1,12 @@
+{
+  "experiment_a": {
+    "base_config": "tests/fixtures/classifier.jsonnet",
+    "search_config": "tests/fixtures/search_space.json",
+    "num_samples": 1
+  },
+  "experiment_b": {
+    "base_config": "tests/fixtures/classifier.jsonnet",
+    "search_config": "tests/fixtures/search_space_b.json",
+    "num_samples": 2
+  }
+}
