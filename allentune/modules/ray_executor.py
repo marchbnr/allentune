@@ -118,6 +118,8 @@ class RayExecutor(object):
             )
 
     def run(self, args: argparse.Namespace) -> None:
+        setattr(args, "cwd", os.getcwd())
+
         if args.search_mode == MULTI_PARAM_SEARCH:
             experiments_config = self._build_multi_run_config(args)
         elif args.search_mode == SINGLE_PARAM_SEARCH:
@@ -125,6 +127,4 @@ class RayExecutor(object):
         else:
             raise RuntimeError('Unknown hyperparameter search mode')
 
-        print(f"CWD: {os.getcwd()}")
-        setattr(args, "cwd", os.getcwd())  # TODO: is this still used?
         self.run_distributed(experiments_config, args)

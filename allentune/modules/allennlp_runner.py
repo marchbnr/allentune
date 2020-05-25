@@ -2,6 +2,7 @@ import argparse
 import json
 import logging
 import os
+from pathlib import Path
 from typing import Dict
 
 import torch
@@ -24,8 +25,13 @@ class AllenNlpRunner(object):
         args: argparse.Namespace,
     ):
         def train_func(config, reporter):
+            # Store the logs in the experiment directory,
+            # but execute the run in the actual cwd.
+            trial_dir = str(Path(os.getcwd(), "trial"))
+            os.chdir(args.cwd)
+
             logger.debug(f"CUDA_VISIBLE_DEVICES: {os.environ['CUDA_VISIBLE_DEVICES']}")
-            
+
             for package_name in getattr(args, "include_package", ()):
                 import_submodules(package_name)
 
@@ -50,7 +56,7 @@ class AllenNlpRunner(object):
 
             logger.debug(f"AllenNLP Configuration: {params.as_dict()}")
 
-            train_model(params=params, serialization_dir="trial")
+            train_model(params=params, serialization_dir=trial_dir)
 
             reporter(done=True)
             
