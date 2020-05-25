@@ -6,6 +6,7 @@ from overrides import overrides
 from allennlp.commands.subcommand import Subcommand
 from allentune.commands.report import Report
 from allentune.commands.search import Search
+from allentune.commands.multisearch import MultiSearch
 from allentune.commands.plot import Plot
 
 logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
@@ -52,6 +53,7 @@ def main(prog: str = None) -> None:
     subcommands = {
             # Default commands
             "search": Search(),
+            "mult": MultiSearch(),
             "report": Report(),
             "plot": Plot()
     }

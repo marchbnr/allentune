@@ -1,3 +1,4 @@
+from allentune import SINGLE_PARAM_SEARCH
 from allentune.modules import AllenNlpRunner, RayExecutor
 import pytest
 import argparse
@@ -26,6 +27,7 @@ class TestExampleRun(object):
         args.with_server = False
         args.server_port = 1000
         args.search_strategy = "variant-generation"
+        args.search_mode = SINGLE_PARAM_SEARCH
         executor.run(args)
         assert os.path.isdir(TESTS_ROOT / "logs")
         shutil.rmtree(TESTS_ROOT / "logs/")
