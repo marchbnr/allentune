@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Dict
 
 import ray
-from ray.tune import function, register_trainable, run_experiments
+from ray.tune import function, register_trainable, run_experiments, grid_search
 
 from allentune import MULTI_PARAM_SEARCH, SINGLE_PARAM_SEARCH
 from allentune.modules.allennlp_runner import AllenNlpRunner
@@ -36,6 +36,8 @@ class RayExecutor(object):
             elif val['sampling strategy'] == 'uniform':
                 low, high = val['bounds'][0], val['bounds'][1]
                 ray_sampler = function(RandomSearch.random_uniform(low, high))
+            elif val['sampling strategy'] == 'grid':
+                ray_sampler = grid_search(val['choices'])
             else:
                 raise KeyError(f"sampling strategy {val['sampling strategy']} does not exist")
             search_config[hyperparameter] = ray_sampler
